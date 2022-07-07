@@ -1,6 +1,6 @@
 package main
 
-import "github.com/nlutterman/zmodinigen/steamworkshop"
+import "gitlab.com/nlutterman/zmodinigen/steamworkshop"
 
 type ZomboidMod struct {
 	*steamworkshop.Item

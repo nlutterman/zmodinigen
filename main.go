@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/nlutterman/zmodinigen/config"
-	"github.com/nlutterman/zmodinigen/steamapi"
+	"gitlab.com/nlutterman/zmodinigen/config"
+	"gitlab.com/nlutterman/zmodinigen/steamapi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
