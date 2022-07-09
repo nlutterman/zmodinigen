@@ -1,5 +1,9 @@
 package steamworkshop
 
+import (
+	"encoding/json"
+)
+
 type Item struct {
 	ID                    string `json:"publishedfileid"`
 	Result                int    `json:"result"`
@@ -27,4 +31,9 @@ type Item struct {
 	Tags                  []struct {
 		Tag string `json:"tag"`
 	} `json:"tags"`
+}
+
+func (i []Item) String() string {
+	bytes, _ := json.Marshal(i)
+	return string(bytes)
 }

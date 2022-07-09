@@ -1,26 +1,28 @@
 package steamapi
 
 import (
-	"fmt"
-	"github.com/nlutterman/zmodinigen/config"
-	"github.com/nlutterman/zmodinigen/errors"
-	"github.com/nlutterman/zmodinigen/steamworkshop"
+	"encoding/json"
+	"gitlab.com/nlutterman/zmodinigen/config"
+	"gitlab.com/nlutterman/zmodinigen/errors"
+	"gitlab.com/nlutterman/zmodinigen/steamworkshop"
 	"io"
-	"net/http"
 )
 
 type Client struct {
 	*config.Config
 }
 
+// NewSteamAPIClient
+// Make sure we rate limit the requests the SteamAPIClient makes
 func NewSteamAPIClient(config *config.Config) *Client {
 	return &Client{
 		Config: config,
 	}
 }
 
-func (client *Client) GetCollectionInfo(collectionIDs []string) ([]steamworkshop.Item, *errors.AppError) {
-	var collections []steamworkshop.Item
+// GetCollectionInfo queries the Steam API for the provided collection IDs
+func (client *Client) GetCollectionInfo(collectionIDs []string) (map[string][]steamworkshop.Item, *errors.AppError) {
+	var collections map[string][]steamworkshop.Item
 	var appErr *errors.AppError
 
 	if len(collectionIDs) == 0 {
@@ -35,12 +37,15 @@ func (client *Client) GetCollectionInfo(collectionIDs []string) ([]steamworkshop
 
 	body, err := io.ReadAll(response.Body)
 	if err != nil {
-		return collections, errors.NewError(errors.ErrorInternal, "error reading body of HTTP response: %v", appErr)
+		return collections, errors.NewError(errors.ErrorInternal, "error reading body of HTTP response: %v", err)
 	}
 
-	response.
+	err = json.Unmarshal(body, &collections)
+	if err != nil {
+		return collections, errors.NewError(errors.ErrorInternal, "error unmarshalling response from Stream API: %v", err)
+	}
 
-	return collections
+	return collections, nil
 }
 
 func (client *Client) GetCollectionItemData(collection []steamworkshop.Item) map[string][]steamworkshop.Item {

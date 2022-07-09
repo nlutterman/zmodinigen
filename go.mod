@@ -1,4 +1,4 @@
-module github.com/nlutterman/zmodinigen
+module gitlab.com/nlutterman/zmodinigen
 
 go 1.18
 

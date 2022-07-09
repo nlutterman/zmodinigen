@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"gitlab.com/nlutterman/zmodinigen/config"
-	"gitlab.com/nlutterman/zmodinigen/steamapi"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
+	"gitlab.com/nlutterman/zmodinigen/config"
+	"gitlab.com/nlutterman/zmodinigen/steamapi"
 )
 
 func main() {
@@ -35,13 +35,16 @@ func GenerateINI(api *steamapi.Client, collectionIDs []string) string {
 	log.Info().
 		Strs("CollectionIDs", collectionIDs).
 		Int("CollectionCount", len(collectionIDs)).
-		Msg("querying for steamworkshop collection data")
-	collections := api.GetCollectionInfo(collectionIDs)
+		Msg("querying for steam workshop collection data")
+	collections, err := api.GetCollectionInfo(collectionIDs)
+	if err != nil {
+		log.Err(err).Msg("error getting collection info")
+	}
 
 	log.Info().
 		Stringers("collections", collections).
 		Int("CollectionCount", len(collectionIDs)).
-		Msg("querying for steamworkshop item data")
+		Msg("querying for steam workshop item data")
 	itemsByCollectionID := api.GetCollectionItemData(collections)
 
 	return fmt.Sprintf("%v\n", itemsByCollectionID)
