@@ -1,8 +1,8 @@
 package steamapi
 
 import (
-	"github.com/nlutterman/zmodinigen/errors"
-	"github.com/nlutterman/zmodinigen/steamworkshop"
+	"gitlab.com/nlutterman/zmodinigen/errors"
+	"gitlab.com/nlutterman/zmodinigen/steamworkshop"
 	"net/http"
 	"net/url"
 	"strconv"

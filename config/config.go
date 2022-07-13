@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/nlutterman/zmodinigen/steamapi"
+	"gitlab.com/nlutterman/zmodinigen/steamapi"
 	"os"
 )
 

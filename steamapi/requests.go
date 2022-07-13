@@ -1,7 +1,7 @@
 package steamapi
 
 import (
-	"github.com/nlutterman/zmodinigen/errors"
+	"gitlab.com/nlutterman/zmodinigen/errors"
 	"net/http"
 	"net/url"
 )

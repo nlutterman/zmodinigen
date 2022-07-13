@@ -2,8 +2,8 @@ package steamapi
 
 import (
 	"fmt"
-	config2 "github.com/nlutterman/zmodinigen/config"
-	"github.com/nlutterman/zmodinigen/steamworkshop"
+	config2 "gitlab.com/nlutterman/zmodinigen/config"
+	"gitlab.com/nlutterman/zmodinigen/steamworkshop"
 	"testing"
 )
 
