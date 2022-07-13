@@ -36,13 +36,13 @@ func GenerateINI(api *steamapi.Client, collectionIDs []string) string {
 		Strs("CollectionIDs", collectionIDs).
 		Int("CollectionCount", len(collectionIDs)).
 		Msg("querying for steam workshop collection data")
-	collections, err := api.GetCollectionInfo(collectionIDs)
+	collections, err := api.GetCollections(collectionIDs)
 	if err != nil {
 		log.Err(err).Msg("error getting collection info")
 	}
 
 	log.Info().
-		Stringers("collections", collections).
+		Stringer("collections", collections).
 		Int("CollectionCount", len(collectionIDs)).
 		Msg("querying for steam workshop item data")
 	itemsByCollectionID := api.GetCollectionItemData(collections)

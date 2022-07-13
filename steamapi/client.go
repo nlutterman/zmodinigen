@@ -13,16 +13,16 @@ type Client struct {
 }
 
 // NewSteamAPIClient
-// Make sure we rate limit the requests the SteamAPIClient makes
+// TODO: Make sure we rate limit the requests the SteamAPIClient makes
 func NewSteamAPIClient(config *config.Config) *Client {
 	return &Client{
 		Config: config,
 	}
 }
 
-// GetCollectionInfo queries the Steam API for the provided collection IDs
-func (client *Client) GetCollectionInfo(collectionIDs []string) (map[string][]steamworkshop.Item, *errors.AppError) {
-	var collections map[string][]steamworkshop.Item
+// GetCollections queries the Steam API for the provided collection IDs
+func (client *Client) GetCollections(collectionIDs []string) (steamworkshop.Collections, *errors.AppError) {
+	var collections = make(steamworkshop.Collections)
 	var appErr *errors.AppError
 
 	if len(collectionIDs) == 0 {
