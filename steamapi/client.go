@@ -5,6 +5,7 @@ import (
 	"gitlab.com/nlutterman/zmodinigen/config"
 	"gitlab.com/nlutterman/zmodinigen/errors"
 	"gitlab.com/nlutterman/zmodinigen/steamworkshop"
+	"gitlab.com/nlutterman/zmodinigen/utils"
 	"io"
 )
 
@@ -21,7 +22,7 @@ func NewSteamAPIClient(config *config.Config) *Client {
 }
 
 // GetCollections queries the Steam API for the provided collection IDs
-func (client *Client) GetCollections(collectionIDs []string) (steamworkshop.Collections, *errors.AppError) {
+func (client *Client) GetCollections(collectionIDs utils.Set[string]) (steamworkshop.Collections, *errors.AppError) {
 	var collections = make(steamworkshop.Collections)
 	var appErr *errors.AppError
 
@@ -29,7 +30,7 @@ func (client *Client) GetCollections(collectionIDs []string) (steamworkshop.Coll
 		return collections, appErr
 	}
 
-	request := NewWorkshopCollectionRequest(collectionIDs)
+	request := NewWorkshopCollectionRequest(collectionIDs.Members())
 	response, appErr := request.Exec(client.SteamAPIEndpoints)
 	if appErr != nil {
 		return collections, appErr

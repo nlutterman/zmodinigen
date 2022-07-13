@@ -6,6 +6,7 @@ import (
 	"github.com/rs/zerolog/log"
 	"gitlab.com/nlutterman/zmodinigen/config"
 	"gitlab.com/nlutterman/zmodinigen/steamapi"
+	"gitlab.com/nlutterman/zmodinigen/utils"
 )
 
 func main() {
@@ -22,10 +23,7 @@ func main() {
 }
 
 func GenerateINI(api *steamapi.Client, collectionIDs []string) string {
-	log.Info().
-		Strs("collection_ids", collectionIDs).
-		Int("collection_count", len(collectionIDs)).
-		Msg("creating INI file(s)")
+	log.Info().Msg("starting to generate INI file(s)")
 
 	if api == nil {
 		// TODO: set up proper errors and error handling
@@ -35,17 +33,13 @@ func GenerateINI(api *steamapi.Client, collectionIDs []string) string {
 	log.Info().
 		Strs("CollectionIDs", collectionIDs).
 		Int("CollectionCount", len(collectionIDs)).
-		Msg("querying for steam workshop collection data")
-	collections, err := api.GetCollections(collectionIDs)
+		Msg("querying for steam workshop collection and item data")
+
+	idSet := utils.NewSetFromSlice[string](collectionIDs)
+	collections, err := api.GetCollections(idSet)
 	if err != nil {
 		log.Err(err).Msg("error getting collection info")
 	}
 
-	log.Info().
-		Stringer("collections", collections).
-		Int("CollectionCount", len(collectionIDs)).
-		Msg("querying for steam workshop item data")
-	itemsByCollectionID := api.GetCollectionItemData(collections)
-
-	return fmt.Sprintf("%v\n", itemsByCollectionID)
+	return fmt.Sprintf("%v\n", collections)
 }

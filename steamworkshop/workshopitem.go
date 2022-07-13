@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 )
 
+type WorkshopItemID string
+
 type Item struct {
 	ID                    string `json:"publishedfileid"`
 	Result                int    `json:"result"`
