@@ -1,1 +1,4 @@
 zmodinigen
+venv
+*.bkp
+**/**.bkp
