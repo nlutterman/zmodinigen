@@ -35,7 +35,7 @@ type Item struct {
 	} `json:"tags"`
 }
 
-func (i []Item) String() string {
+func (i Item) String() string {
 	bytes, _ := json.Marshal(i)
 	return string(bytes)
 }

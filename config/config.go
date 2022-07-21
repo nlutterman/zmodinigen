@@ -15,12 +15,7 @@ const (
 )
 
 type Config struct {
-	SteamAPIHost string
-	SteamAppID   string
-	SteamAppName string
-	SteamAPIKey  string
-
-	SteamAPIEndpoints steamapi.EndpointMap
+	*steamapi.ClientConfig
 }
 
 func (c *Config) loadEnvironment() {

@@ -13,7 +13,7 @@ func main() {
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 
 	c := config.NewConfig()
-	api := steamapi.NewSteamAPIClient(c)
+	api := steamapi.NewSteamAPIClient(c.ClientConfig)
 
 	collectionIDs := []string{
 		"2757817552", // Squirtle Squad

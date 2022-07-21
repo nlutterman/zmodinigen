@@ -2,7 +2,6 @@ package steamapi
 
 import (
 	"encoding/json"
-	"gitlab.com/nlutterman/zmodinigen/config"
 	"gitlab.com/nlutterman/zmodinigen/errors"
 	"gitlab.com/nlutterman/zmodinigen/steamworkshop"
 	"gitlab.com/nlutterman/zmodinigen/utils"
@@ -10,15 +9,22 @@ import (
 )
 
 type Client struct {
-	*config.Config
+	*ClientConfig
+}
+
+type ClientConfig struct {
+	SteamAPIHost string
+	SteamAppID   string
+	SteamAppName string
+	SteamAPIKey  string
+
+	SteamAPIEndpoints EndpointMap
 }
 
 // NewSteamAPIClient
 // TODO: Make sure we rate limit the requests the SteamAPIClient makes
-func NewSteamAPIClient(config *config.Config) *Client {
-	return &Client{
-		Config: config,
-	}
+func NewSteamAPIClient(config *ClientConfig) *Client {
+	return &Client{config}
 }
 
 // GetCollections queries the Steam API for the provided collection IDs
